@@ -30,6 +30,7 @@ function App() {
                     y={shape.y}
                     radius={50}
                     fill="red"
+                    draggable
                   />
                 );
               case "square":
@@ -41,6 +42,7 @@ function App() {
                     width={100}
                     height={100}
                     fill="green"
+                    draggable
                   />
                 );
               case "triangle":
@@ -52,6 +54,7 @@ function App() {
                     sides={3}
                     radius={50}
                     fill="blue"
+                    draggable
                   />
                 );
               default:
