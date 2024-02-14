@@ -9,8 +9,9 @@ function App() {
     const newShape = {
       id: shapes.length + 1,
       type: shapeType,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
+      x: Math.random() * window.innerWidth * 0.8,
+      y: Math.random() * window.innerHeight * 0.8,
+      size: 50, // Default size
     };
     setShapes([...shapes, newShape]);
   };
