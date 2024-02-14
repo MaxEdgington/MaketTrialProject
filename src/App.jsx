@@ -2,8 +2,18 @@ import React, { useState } from "react";
 import { Stage, Layer, Circle, Rect, RegularPolygon } from "react-konva";
 import Toolbar from "./Toolbar";
 
-const ShapeEditor = ({ selectedShape, onUpdate, onDelete }) => {
+const ShapeEditor = ({ selectedShape, onUpdate, onDelete, x, y }) => {
   if (!selectedShape) return null;
+
+  const editorStyle = {
+    position: "absolute",
+    left: `${x}px`,
+    top: `${y}px`,
+    backgroundColor: "#fff",
+    padding: "10px",
+    borderRadius: "5px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+  };
 
   const handleSizeChange = (e) => {
     const newSize = parseInt(e.target.value, 10);
@@ -13,7 +23,7 @@ const ShapeEditor = ({ selectedShape, onUpdate, onDelete }) => {
   };
 
   return (
-    <div className="shape-editor">
+    <div className="shape-editor" style={editorStyle}>
       <label>
         Size:
         <input
@@ -61,6 +71,8 @@ function App() {
     setSelectedId(null); // Deselect shape
   };
 
+  const selectedShape = shapes.find((shape) => shape.id === selectedId);
+
   return (
     <div>
       <Toolbar onAddShape={addShape} />
@@ -89,13 +101,32 @@ function App() {
 
             switch (shape.type) {
               case "circle":
-                return <Circle {...commonProps} radius={shape.size || 50} />;
+                return (
+                  <Circle
+                    {...commonProps}
+                    radius={shape.size || 50}
+                    onDragEnd={(e) => {
+                      updateShape({
+                        ...shape,
+                        x: e.target.x(),
+                        y: e.target.y(),
+                      });
+                    }}
+                  />
+                );
               case "square":
                 return (
                   <Rect
                     {...commonProps}
                     width={shape.size}
                     height={shape.size}
+                    onDragEnd={(e) => {
+                      updateShape({
+                        ...shape,
+                        x: e.target.x(),
+                        y: e.target.y(),
+                      });
+                    }}
                   />
                 );
               case "triangle":
@@ -104,6 +135,13 @@ function App() {
                     {...commonProps}
                     sides={3}
                     radius={shape.size || 50}
+                    onDragEnd={(e) => {
+                      updateShape({
+                        ...shape,
+                        x: e.target.x(),
+                        y: e.target.y(),
+                      });
+                    }}
                   />
                 );
               default:
@@ -116,6 +154,8 @@ function App() {
         selectedShape={shapes.find((shape) => shape.id === selectedId)}
         onUpdate={updateShape}
         onDelete={deleteShape}
+        x={selectedShape ? selectedShape.x : 0}
+        y={selectedShape ? selectedShape.y : 0}
       />
     </div>
   );
