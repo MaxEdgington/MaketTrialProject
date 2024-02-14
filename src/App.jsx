@@ -57,8 +57,8 @@ function App() {
   };
 
   const selectShape = (id) => {
-    console.log("Selected Shape ID:", id); // Debugging line
-    setSelectedId(id);
+    console.log("Selected Shape ID:", id);
+    setSelectedId(selectedId === id ? null : id);
   };
 
   const updateShape = (updatedShape) => {
@@ -123,11 +123,23 @@ function App() {
                       const shapeBounds = {
                         x: Math.max(
                           0,
-                          Math.min(e.target.x(), boundaryWidth - shape.size)
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                         y: Math.max(
                           0,
-                          Math.min(e.target.y(), boundaryHeight - shape.size)
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                       };
                       updateShape({
@@ -147,11 +159,23 @@ function App() {
                       const shapeBounds = {
                         x: Math.max(
                           0,
-                          Math.min(e.target.x(), boundaryWidth - shape.size)
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                         y: Math.max(
                           0,
-                          Math.min(e.target.y(), boundaryHeight - shape.size)
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                       };
                       updateShape({
@@ -171,11 +195,23 @@ function App() {
                       const shapeBounds = {
                         x: Math.max(
                           0,
-                          Math.min(e.target.x(), boundaryWidth - shape.size)
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                         y: Math.max(
                           0,
-                          Math.min(e.target.y(), boundaryHeight - shape.size)
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
                         ),
                       };
                       updateShape({
