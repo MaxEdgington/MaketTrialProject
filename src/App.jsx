@@ -38,6 +38,9 @@ const ShapeEditor = ({ selectedShape, onUpdate, onDelete, x, y }) => {
 };
 
 function App() {
+  const boundaryWidth = window.innerWidth * 0.8;
+  const boundaryHeight = window.innerHeight * 0.8;
+
   const [shapes, setShapes] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -55,8 +58,8 @@ function App() {
   };
 
   const selectShape = (id) => {
-    console.log("Selected Shape ID:", id); // Debugging line
-    setSelectedId(id);
+    console.log("Selected Shape ID:", id);
+    setSelectedId(selectedId === id ? null : id);
   };
 
   const updateShape = (updatedShape) => {
@@ -79,6 +82,17 @@ function App() {
       <Toolbar onAddShape={addShape} />
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
+          {/*Boundary Rectangle */}
+          <Rect
+            x={0}
+            y={0}
+            width={boundaryWidth}
+            height={boundaryHeight}
+            stroke="black"
+            strokeWidth={2}
+          />
+
+          {/*Shape Logic */}
           {shapes.map((shape) => {
             console.log("Rendering Shape with Size:", shape.size, shape.id);
             const isSelected = shape.id === selectedId;
@@ -107,10 +121,31 @@ function App() {
                     {...commonProps}
                     radius={shape.size || 50}
                     onDragEnd={(e) => {
+                      const shapeBounds = {
+                        x: Math.max(
+                          0,
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                        y: Math.max(
+                          0,
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                      };
                       updateShape({
                         ...shape,
-                        x: e.target.x(),
-                        y: e.target.y(),
+                        ...shapeBounds,
                       });
                     }}
                   />
@@ -122,10 +157,31 @@ function App() {
                     width={shape.size}
                     height={shape.size}
                     onDragEnd={(e) => {
+                      const shapeBounds = {
+                        x: Math.max(
+                          0,
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                        y: Math.max(
+                          0,
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                      };
                       updateShape({
                         ...shape,
-                        x: e.target.x(),
-                        y: e.target.y(),
+                        ...shapeBounds,
                       });
                     }}
                   />
@@ -137,10 +193,31 @@ function App() {
                     sides={3}
                     radius={shape.size || 50}
                     onDragEnd={(e) => {
+                      const shapeBounds = {
+                        x: Math.max(
+                          0,
+                          Math.min(
+                            e.target.x(),
+                            boundaryWidth -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                        y: Math.max(
+                          0,
+                          Math.min(
+                            e.target.y(),
+                            boundaryHeight -
+                              (shape.type === "square"
+                                ? shape.size
+                                : shape.size * 2)
+                          )
+                        ),
+                      };
                       updateShape({
                         ...shape,
-                        x: e.target.x(),
-                        y: e.target.y(),
+                        ...shapeBounds,
                       });
                     }}
                   />
