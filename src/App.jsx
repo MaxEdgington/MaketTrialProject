@@ -49,6 +49,7 @@ function App() {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
       size: 50,
+
     };
     setShapes([...shapes, newShape]);
   };
